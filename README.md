@@ -63,7 +63,18 @@ cd ..
 - **RTP Test**: 10k prompts for large-scale evaluation (optional)
 - **Demo prompts**: Already included in `data/prompts.jsonl` (12 examples)
 
-### 4. Run Tutorial
+### 4. HMM Distillation (Optional)
+
+The pre-trained HMM downloaded above is ready to use. If you want to train your own HMM (e.g., for a different base LM, or with a different model family like second-order HMMs), the distillation pipeline is available at [Ctrl-G/distillation](https://github.com/joshuacnf/Ctrl-G/tree/main/distillation).
+
+Our pre-trained HMM was distilled from GPT2-Large using the following setup:
+- **Training data**: 10M sequences sampled unconditionally from the base LM (BOS token only, no prompt), using nucleus sampling (top-p = 0.9, temperature = 1.0) at a fixed length of 32 tokens
+- **Hidden state size**: h = 4096 (h = 256 for the lightweight personalization experiments)
+- **Training**: Mini-batch EM with batch size 4096, 50 epochs, step size linearly annealed from 1.0 to 0.0
+
+These settings can be freely adapted. For example, you could distill from a different base LM, use longer sequences, or experiment with different hidden state sizes depending on your compute budget and use case.
+
+### 5. Run Tutorial
 
 🎯 **Start here**: Open and run **[tutorial.ipynb](tutorial.ipynb)** for a complete interactive walkthrough!
 
