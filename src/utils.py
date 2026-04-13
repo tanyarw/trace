@@ -1,5 +1,6 @@
 import torch
 from .hmm import HMM
+from .sohmm import SOHMM
 import pandas as pd
 from typing import Tuple
 
@@ -18,6 +19,21 @@ def load_hmm_model(hmm_model_path: str, device: str = 'cuda:0') -> HMM:
         HMM: Loaded HMM model.
     """
     hmm_model = HMM.from_pretrained(hmm_model_path, local_files_only=True).to(device)
+    hmm_model.eval()
+    return hmm_model
+
+def load_sohmm_model(hmm_model_path: str, device: str = 'cuda:0') -> SOHMM:
+    """
+    Load the pretrained SOHMM model.
+
+    Args:
+        hmm_model_path (str): Path to the saved SOHMM model.
+        device (str): Device to load the model on.
+
+    Returns:
+        SOHMM: Loaded SOHMM model.
+    """
+    hmm_model = SOHMM.from_pretrained(hmm_model_path, local_files_only=True).to(device)
     hmm_model.eval()
     return hmm_model
 
